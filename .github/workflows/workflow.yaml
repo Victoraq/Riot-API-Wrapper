@@ -21,4 +21,4 @@ jobs:
             API_KEY: ${{ secrets.API_KEY }}
             ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
         run: |
-          pytest
+          pipenv run pytest
