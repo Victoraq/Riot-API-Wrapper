@@ -1,4 +1,5 @@
 import requests
+from .endpoints import API_PATH
 
 
 class LoLWrapper():
@@ -13,7 +14,8 @@ class LoLWrapper():
         self.headers = {"X-Riot-Token": user_api_key}
 
     def summoner_champion_mastery(self, account_id=None):
-        url = f"{self.region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{account_id}"
+        url = API_PATH["champion_masteries"].format(
+            region_url=self.region_url, account_id=account_id)
 
         response = requests.get(url, headers=self.headers)
 
