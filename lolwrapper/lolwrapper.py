@@ -1,16 +1,20 @@
 import requests
-from .endpoints import API_PATH
+from .const import REGION_URL, API_PATH
 
 
 class LoLWrapper():
 
-    _region_dict = {
-        "BR1": "https://br1.api.riotgames.com"
-    }
-
     def __init__(self, api_key, region):
         user_api_key = api_key
-        self.region_url = self._region_dict[region]
+
+        if region in REGION_URL.keys():
+            self.region_url = REGION_URL[region]
+        else:
+            raise Exception("""
+                The region {} is not available. 
+                The current available regions are: {}"""
+                .format(region, ', '.join(list(REGION_URL.keys()))))
+                
         self.headers = {"X-Riot-Token": user_api_key}
 
     def summoner_champion_mastery(self, account_id=None):

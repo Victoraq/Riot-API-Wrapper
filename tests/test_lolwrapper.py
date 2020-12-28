@@ -1,4 +1,5 @@
 from lolwrapper.lolwrapper import LoLWrapper
+from lolwrapper.const import REGION_URL
 import pytest
 
 @pytest.fixture
@@ -14,6 +15,17 @@ def environment():
     }
 
     return env
+
+def test_wrong_region():
+    """Tests the exception raised after try to initialize the wrapper with a not available region"""
+
+    region = "WRONG"
+
+    with pytest.raises(Exception) as region_info:
+        wrapper = LoLWrapper("key", region=region)
+
+    assert f"{region} is not available" in str(region_info.value)
+    assert ', '.join(list(REGION_URL.keys())) in str(region_info.value)
 
 
 def test_summoner_champion_mastery(environment):
