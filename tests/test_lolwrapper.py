@@ -2,6 +2,7 @@ from lolwrapper.lolwrapper import LoLWrapper
 from lolwrapper.const import REGION_URL
 import pytest
 
+
 @pytest.fixture
 def environment():
     import os
@@ -16,13 +17,15 @@ def environment():
 
     return env
 
+
 def test_wrong_region():
-    """Tests the exception raised after try to initialize the wrapper with a not available region"""
+    """Tests the exception raised after try to initialize
+    the wrapper with a not available region"""
 
     region = "WRONG"
 
     with pytest.raises(Exception) as region_info:
-        wrapper = LoLWrapper("key", region=region)
+        _ = LoLWrapper("key", region=region)
 
     assert f"{region} is not available" in str(region_info.value)
     assert ', '.join(list(REGION_URL.keys())) in str(region_info.value)
@@ -40,6 +43,7 @@ def test_summoner_champion_mastery_list(environment):
     assert isinstance(response[0], dict)
     assert response[0]["summonerId"] == account_id
 
+
 def test_summoner_champion_mastery(environment):
     """Tests an API call to get a champion mastery of a summoner"""
 
@@ -53,6 +57,7 @@ def test_summoner_champion_mastery(environment):
     assert response["championId"] == champion_id
     assert response["summonerId"] == account_id
 
+
 def test_summoner_mastery_score(environment):
     """Tests an API call to get a mastery score of a summoner"""
 
@@ -63,6 +68,7 @@ def test_summoner_mastery_score(environment):
     response = wrapper.summoner_mastery_score(account_id)
 
     assert isinstance(response, int)
+
 
 def test_champion_rotations(environment):
     """Test an API call to get the champion rotation"""
