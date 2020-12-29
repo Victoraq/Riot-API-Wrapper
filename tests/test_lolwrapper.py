@@ -1,5 +1,7 @@
 from lolwrapper.lolwrapper import LoLWrapper
-from lolwrapper.const import *
+from lolwrapper.const import (
+    REGION_URL, QUEUE_LIST, TIER_LIST, DIVISION_LIST
+)
 import pytest
 
 
@@ -81,6 +83,7 @@ def test_champion_rotations(environment):
     assert "freeChampionIds" in response.keys()
     assert "freeChampionIdsForNewPlayers" in response.keys()
 
+
 def test_league_entries(environment):
     """Test an API call to get all league entries"""
 
@@ -95,6 +98,7 @@ def test_league_entries(environment):
     assert isinstance(response, list)
     assert isinstance(response[0], dict)
     assert "leagueId" in response[0]
+
 
 def test_league_entries_page(environment):
     """Test an API call to get league entries by page"""
@@ -111,6 +115,7 @@ def test_league_entries_page(environment):
 
     assert isinstance(response_page2, list)
     assert response_page1 != response_page2
+
 
 def test_league_entries_wrong_parameter_message(environment):
     """Test an API call to get league entries by page"""

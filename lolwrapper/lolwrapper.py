@@ -1,5 +1,8 @@
 import requests
-from .const import *
+from lolwrapper.const import (
+    API_PATH, REGION_URL, QUEUE_LIST,
+    TIER_LIST, DIVISION_LIST
+)
 
 
 class LoLWrapper():
@@ -57,14 +60,18 @@ class LoLWrapper():
         return response.json()
 
     def league_entries(self, queue, tier, division, page=None):
-        """Get all the league entries. 
-        The entries can be devided into pages. If not provide the page parameter
-        it will start at page 1.
+        """Get all the league entries.
+        The entries can be devided into pages.
+        If not provide the page parameter it will start at page 1.
 
         The possible parameter values are:
 
-        Queue: RANKED_SOLO_5x5, RANKED_FLEX_SR, RANKED_FLEX_TFT, RANKED_FLEX_TT
-        Tier: IRON, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND, MASTER, GRANDMASTER, CHALLENGER
+        Queue: RANKED_SOLO_5x5, RANKED_FLEX_SR,
+            RANKED_FLEX_TFT, RANKED_FLEX_TT
+
+        Tier: IRON, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND,
+            MASTER, GRANDMASTER, CHALLENGER
+
         Division: I, II, III, IV
         """
 
@@ -91,8 +98,9 @@ class LoLWrapper():
             queue=queue,
             tier=tier,
             division=division)
-        
-        if page: url += f"?page={page}"
+
+        if page:
+            url += f"?page={page}"
 
         response = requests.get(url, headers=self.headers)
 
