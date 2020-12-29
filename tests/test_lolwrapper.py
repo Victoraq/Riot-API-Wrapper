@@ -1,5 +1,5 @@
 from lolwrapper.lolwrapper import LoLWrapper
-from lolwrapper.const import REGION_URL
+from lolwrapper.const import *
 import pytest
 
 
@@ -80,3 +80,67 @@ def test_champion_rotations(environment):
     assert isinstance(response, dict)
     assert "freeChampionIds" in response.keys()
     assert "freeChampionIdsForNewPlayers" in response.keys()
+
+def test_league_entries(environment):
+    """Test an API call to get all league entries"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    queue = "RANKED_SOLO_5x5"
+    tier = "CHALLENGER"
+    division = "I"
+
+    response = wrapper.league_entries(queue, tier, division)
+
+    assert isinstance(response, list)
+    assert isinstance(response[0], dict)
+    assert "leagueId" in response[0]
+
+def test_league_entries_page(environment):
+    """Test an API call to get league entries by page"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    queue = "RANKED_SOLO_5x5"
+    tier = "BRONZE"
+    division = "I"
+    page = 2
+
+    response_page1 = wrapper.league_entries(queue, tier, division)
+    response_page2 = wrapper.league_entries(queue, tier, division, page=page)
+
+    assert isinstance(response_page2, list)
+    assert response_page1 != response_page2
+
+def test_league_entries_wrong_parameter_message(environment):
+    """Test an API call to get league entries by page"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    queue = "RANKED_SOLO_5x5"
+    wrong_queue = "RANKED_DUO_5x5"
+    tier = "BRONZE"
+    wrong_tier = "MASTERY"
+    division = "I"
+    wrong_division = "VIIII"
+
+    # queue message
+    with pytest.raises(Exception) as queue_info:
+        _ = wrapper.league_entries(wrong_queue, tier, division)
+
+    assert f"{wrong_queue} is not available" in str(queue_info.value)
+    assert ', '.join(QUEUE_LIST) in str(queue_info.value)
+
+    # tier message
+    with pytest.raises(Exception) as tier_info:
+        _ = wrapper.league_entries(queue, wrong_tier, division)
+
+    assert f"{wrong_tier} is not available" in str(tier_info.value)
+    assert ', '.join(TIER_LIST) in str(tier_info.value)
+
+    # division message
+    with pytest.raises(Exception) as division_info:
+        _ = wrapper.league_entries(queue, tier, wrong_division)
+
+    assert f"{wrong_division} is not available" in str(division_info.value)
+    assert ', '.join(DIVISION_LIST) in str(division_info.value)
