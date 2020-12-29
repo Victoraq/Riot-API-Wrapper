@@ -63,3 +63,14 @@ def test_summoner_mastery_score(environment):
     response = wrapper.summoner_mastery_score(account_id)
 
     assert isinstance(response, int)
+
+def test_champion_rotations(environment):
+    """Test an API call to get the champion rotation"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    response = wrapper.champion_rotations()
+
+    assert isinstance(response, dict)
+    assert "freeChampionIds" in response.keys()
+    assert "freeChampionIdsForNewPlayers" in response.keys()

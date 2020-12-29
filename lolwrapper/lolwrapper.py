@@ -43,3 +43,12 @@ class LoLWrapper():
 
         return response.json()
     
+    def champion_rotations(self):
+        """Returns champion rotations, including 
+        free-to-play and low-level free-to-play rotations"""
+
+        url = API_PATH["champion_rotations"].format(region_url=self.region_url)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
