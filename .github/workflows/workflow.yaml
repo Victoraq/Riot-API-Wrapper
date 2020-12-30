@@ -25,6 +25,6 @@ jobs:
       - name: Run unit tests
         env:
             API_KEY: ${{ secrets.API_KEY }}
-            ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+            SUMMONER_ID: ${{ secrets.SUMMONER_ID }}
         run: |
           pipenv run pytest
