@@ -21,9 +21,19 @@ class LoLWrapper():
 
         self.headers = {"X-Riot-Token": user_api_key}
 
+    def summoner_by_id(self, summoner_id):
+        """Get a summoner by summoner ID."""
+
+        url = API_PATH["summoner_by_id"].format(
+                region_url=self.region_url, summoner_id=summoner_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
     def summoner_champion_mastery(self, summoner_id, champion_id=None):
         """Get champion mastery entries by player id.
-        For a specific champion use the champion_id parameter"""
+        For a specific champion use the champion_id parameter."""
 
         if champion_id:
             url = API_PATH["champion_mastery"].format(
@@ -51,7 +61,7 @@ class LoLWrapper():
 
     def champion_rotations(self):
         """Returns champion rotations, including
-        free-to-play and low-level free-to-play rotations"""
+        free-to-play and low-level free-to-play rotations."""
 
         url = API_PATH["champion_rotations"].format(region_url=self.region_url)
 

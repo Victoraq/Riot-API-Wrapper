@@ -17,6 +17,7 @@ REGION_URL = {
 }
 
 API_PATH = {
+    "summoner_by_id": "{region_url}/lol/summoner/v4/summoners/{summoner_id}",
     "champion_masteries": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{summoner_id}",
     "champion_mastery": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{summoner_id}/by-champion/{championId}",
     "mastery_score": "{region_url}/lol/champion-mastery/v4/scores/by-summoner/{summoner_id}",

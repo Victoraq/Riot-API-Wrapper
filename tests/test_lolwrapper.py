@@ -33,6 +33,20 @@ def test_wrong_region():
     assert ', '.join(list(REGION_URL.keys())) in str(region_info.value)
 
 
+def test_get_summoner_by_id(environment):
+    """Tests an API call to get a summoner by the id"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    summoner_id = environment['summoner_id']
+    response = wrapper.summoner_by_id(summoner_id)
+
+    assert isinstance(response, dict)
+    assert "id" in response.keys()
+    assert response["id"] == summoner_id
+    assert "puuid" in response.keys()
+
+
 def test_summoner_champion_mastery_list(environment):
     """Tests an API call to get the all champion mastery`s of a summoner"""
 
