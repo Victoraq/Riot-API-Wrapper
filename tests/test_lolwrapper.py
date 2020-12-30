@@ -45,6 +45,7 @@ def test_get_summoner_by_id(environment):
     assert "id" in response.keys()
     assert response["id"] == summoner_id
     assert "puuid" in response.keys()
+    assert "accountId" in response.keys()
 
 
 def test_summoner_champion_mastery_list(environment):
@@ -163,3 +164,49 @@ def test_league_entries_wrong_parameter_message(environment):
 
     assert f"{wrong_division} is not available" in str(division_info.value)
     assert ', '.join(DIVISION_LIST) in str(division_info.value)
+
+
+def test_match_list(environment):
+    """Test an API call to get the match list of a user"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    summoner_id = environment['summoner_id']
+
+    # get the account_id
+    user_data = wrapper.summoner_by_id(summoner_id)
+
+    account_id = user_data["accountId"]
+
+    response = wrapper.match_list(account_id)
+
+    assert isinstance(response, dict)
+    assert "matches" in response.keys()
+    assert isinstance(response["matches"], list)
+    assert isinstance(response["matches"][0], dict)
+    assert "gameId" in response["matches"][0].keys()
+
+
+def test_match_by_id(environment):
+    """Test an API call to get a match by id"""
+
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    summoner_id = environment['summoner_id']
+
+    # get the account_id
+    user_data = wrapper.summoner_by_id(summoner_id)
+
+    account_id = user_data["accountId"]
+
+    match_list = wrapper.match_list(account_id)
+
+    game_id = match_list["matches"][0]["gameId"]
+
+    response = wrapper.match_by_id(game_id)
+
+    assert isinstance(response, dict)
+    assert "gameId" in response.keys()
+    assert response["gameId"] == game_id
+    assert "mapId" in response.keys()
+

@@ -115,3 +115,28 @@ class LoLWrapper():
         response = requests.get(url, headers=self.headers)
 
         return response.json()
+
+    def match_by_id(self, match_id):
+        """Get match by match ID."""
+
+        url = API_PATH["match_by_id"].format(
+            region_url=self.region_url, match_id=match_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
+    def match_list(self, account_id):
+        """
+        Get matchlist for games played on given account ID and region
+        and filtered using given filter parameters, if any.
+
+        TODO: allow parameters
+        """
+
+        url = API_PATH["match_list"].format(
+            region_url=self.region_url, account_id=account_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()

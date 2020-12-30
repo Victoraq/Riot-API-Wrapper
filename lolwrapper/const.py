@@ -23,6 +23,8 @@ API_PATH = {
     "mastery_score": "{region_url}/lol/champion-mastery/v4/scores/by-summoner/{summoner_id}",
     "champion_rotations": "{region_url}/lol/platform/v3/champion-rotations",
     "league_entries": "{region_url}/lol/league-exp/v4/entries/{queue}/{tier}/{division}",
+    "match_by_id": "{region_url}/lol/match/v4/matches/{match_id}",
+    "match_list": "{region_url}/lol/match/v4/matchlists/by-account/{account_id}",
 }
 
 """Lists of queue, tiers and divisions available"""
