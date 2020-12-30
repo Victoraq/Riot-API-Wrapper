@@ -17,9 +17,9 @@ REGION_URL = {
 }
 
 API_PATH = {
-    "champion_masteries": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{account_id}",
-    "champion_mastery": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{account_id}/by-champion/{championId}",
-    "mastery_score": "{region_url}/lol/champion-mastery/v4/scores/by-summoner/{account_id}",
+    "champion_masteries": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{summoner_id}",
+    "champion_mastery": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{summoner_id}/by-champion/{championId}",
+    "mastery_score": "{region_url}/lol/champion-mastery/v4/scores/by-summoner/{summoner_id}",
     "champion_rotations": "{region_url}/lol/platform/v3/champion-rotations",
     "league_entries": "{region_url}/lol/league-exp/v4/entries/{queue}/{tier}/{division}",
 }

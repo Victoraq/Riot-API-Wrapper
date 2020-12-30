@@ -10,11 +10,11 @@ def environment():
     import os
 
     api_key = os.environ.get('API_KEY')
-    account_id = os.environ.get('ACCOUNT_ID')
+    summoner_id = os.environ.get('SUMMONER_ID')
 
     env = {
         'api_key': api_key,
-        'account_id': account_id
+        'summoner_id': summoner_id
     }
 
     return env
@@ -38,12 +38,12 @@ def test_summoner_champion_mastery_list(environment):
 
     wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
-    account_id = environment['account_id']
-    response = wrapper.summoner_champion_mastery(account_id)
+    summoner_id = environment['summoner_id']
+    response = wrapper.summoner_champion_mastery(summoner_id)
 
     assert isinstance(response, list)
     assert isinstance(response[0], dict)
-    assert response[0]["summonerId"] == account_id
+    assert response[0]["summonerId"] == summoner_id
 
 
 def test_summoner_champion_mastery(environment):
@@ -51,13 +51,13 @@ def test_summoner_champion_mastery(environment):
 
     wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
-    account_id = environment['account_id']
+    summoner_id = environment['summoner_id']
     champion_id = 43
-    response = wrapper.summoner_champion_mastery(account_id, champion_id)
+    response = wrapper.summoner_champion_mastery(summoner_id, champion_id)
 
     assert isinstance(response, dict)
     assert response["championId"] == champion_id
-    assert response["summonerId"] == account_id
+    assert response["summonerId"] == summoner_id
 
 
 def test_summoner_mastery_score(environment):
@@ -65,9 +65,9 @@ def test_summoner_mastery_score(environment):
 
     wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
-    account_id = environment['account_id']
+    summoner_id = environment['summoner_id']
 
-    response = wrapper.summoner_mastery_score(account_id)
+    response = wrapper.summoner_mastery_score(summoner_id)
 
     assert isinstance(response, int)
 

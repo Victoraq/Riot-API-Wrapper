@@ -21,29 +21,29 @@ class LoLWrapper():
 
         self.headers = {"X-Riot-Token": user_api_key}
 
-    def summoner_champion_mastery(self, account_id, champion_id=None):
+    def summoner_champion_mastery(self, summoner_id, champion_id=None):
         """Get champion mastery entries by player id.
         For a specific champion use the champion_id parameter"""
 
         if champion_id:
             url = API_PATH["champion_mastery"].format(
                 region_url=self.region_url,
-                account_id=account_id,
+                summoner_id=summoner_id,
                 championId=champion_id)
         else:
             url = API_PATH["champion_masteries"].format(
-                region_url=self.region_url, account_id=account_id)
+                region_url=self.region_url, summoner_id=summoner_id)
 
         response = requests.get(url, headers=self.headers)
 
         return response.json()
 
-    def summoner_mastery_score(self, account_id):
+    def summoner_mastery_score(self, summoner_id):
         """Get a player's total champion mastery score,
         which is the sum of individual champion mastery levels."""
 
         url = API_PATH["mastery_score"].format(
-            region_url=self.region_url, account_id=account_id)
+            region_url=self.region_url, summoner_id=summoner_id)
 
         response = requests.get(url, headers=self.headers)
 
