@@ -20,6 +20,13 @@ def environment():
     return env
 
 
+@pytest.fixture
+def wrapper(environment):
+    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+    return wrapper
+
+
 def test_wrong_region():
     """Tests the exception raised after try to initialize
     the wrapper with a not available region"""
@@ -33,10 +40,8 @@ def test_wrong_region():
     assert ', '.join(list(REGION_URL.keys())) in str(region_info.value)
 
 
-def test_get_summoner_by_id(environment):
+def test_get_summoner_by_id(wrapper, environment):
     """Tests an API call to get a summoner by the id"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     summoner_id = environment['summoner_id']
     response = wrapper.summoner_by_id(summoner_id)
@@ -48,10 +53,8 @@ def test_get_summoner_by_id(environment):
     assert "accountId" in response.keys()
 
 
-def test_summoner_champion_mastery_list(environment):
+def test_summoner_champion_mastery_list(wrapper, environment):
     """Tests an API call to get the all champion mastery`s of a summoner"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     summoner_id = environment['summoner_id']
     response = wrapper.summoner_champion_mastery(summoner_id)
@@ -61,10 +64,8 @@ def test_summoner_champion_mastery_list(environment):
     assert response[0]["summonerId"] == summoner_id
 
 
-def test_summoner_champion_mastery(environment):
+def test_summoner_champion_mastery(wrapper, environment):
     """Tests an API call to get a champion mastery of a summoner"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     summoner_id = environment['summoner_id']
     champion_id = 43
@@ -75,10 +76,8 @@ def test_summoner_champion_mastery(environment):
     assert response["summonerId"] == summoner_id
 
 
-def test_summoner_mastery_score(environment):
+def test_summoner_mastery_score(wrapper, environment):
     """Tests an API call to get a mastery score of a summoner"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     summoner_id = environment['summoner_id']
 
@@ -87,10 +86,8 @@ def test_summoner_mastery_score(environment):
     assert isinstance(response, int)
 
 
-def test_champion_rotations(environment):
+def test_champion_rotations(wrapper):
     """Test an API call to get the champion rotation"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     response = wrapper.champion_rotations()
 
@@ -99,10 +96,8 @@ def test_champion_rotations(environment):
     assert "freeChampionIdsForNewPlayers" in response.keys()
 
 
-def test_league_entries(environment):
+def test_league_entries(wrapper):
     """Test an API call to get all league entries"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     queue = "RANKED_SOLO_5x5"
     tier = "CHALLENGER"
@@ -115,10 +110,8 @@ def test_league_entries(environment):
     assert "leagueId" in response[0]
 
 
-def test_league_entries_page(environment):
+def test_league_entries_page(wrapper):
     """Test an API call to get league entries by page"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     queue = "RANKED_SOLO_5x5"
     tier = "BRONZE"
@@ -132,10 +125,8 @@ def test_league_entries_page(environment):
     assert response_page1 != response_page2
 
 
-def test_league_entries_wrong_parameter_message(environment):
+def test_league_entries_wrong_parameter_message(wrapper):
     """Test an API call to get league entries by page"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     queue = "RANKED_SOLO_5x5"
     wrong_queue = "RANKED_DUO_5x5"
@@ -166,10 +157,8 @@ def test_league_entries_wrong_parameter_message(environment):
     assert ', '.join(DIVISION_LIST) in str(division_info.value)
 
 
-def test_match_list(environment):
+def test_match_list(wrapper, environment):
     """Test an API call to get the match list of a user"""
-
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
 
     summoner_id = environment['summoner_id']
 
@@ -187,10 +176,10 @@ def test_match_list(environment):
     assert "gameId" in response["matches"][0].keys()
 
 
-def test_match_by_id(environment):
-    """Test an API call to get a match by id"""
 
-    wrapper = LoLWrapper(environment['api_key'], region="BR1")
+
+def test_match_by_id(wrapper, environment):
+    """Test an API call to get a match by id"""
 
     summoner_id = environment['summoner_id']
 
