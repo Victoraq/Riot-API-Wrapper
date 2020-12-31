@@ -126,13 +126,35 @@ class LoLWrapper():
 
         return response.json()
 
-    def match_list(self, account_id):
+    def match_list(self, account_id,
+                   champion=None,
+                   queue=None,
+                   season=None,
+                   endTime=None,
+                   beginTime=None,
+                   endIndex=None,
+                   beginIndex=None):
         """
         Get matchlist for games played on given account ID and region
         and filtered using given filter parameters, if any.
 
         TODO: allow parameters
         """
+
+        # Check api limitations over index and time.
+        if beginIndex is not None and endIndex is not None:
+            if beginIndex > endIndex:
+                raise Exception("endIndex must be greater than beginIndex.")
+            
+            if abs(beginIndex - endIndex) > 100:
+                raise Exception("The maximum index range allowed is 100.")
+
+        if beginTime is not None and endTime is not None:
+            if beginTime > endTime:
+                raise Exception("endTime must be greater than beginTime.")
+
+            if abs(beginTime - endTime) > 604800000:
+                raise Exception("The maximum time range allowed is one week.")
 
         url = API_PATH["match_list"].format(
             region_url=self.region_url, account_id=account_id)

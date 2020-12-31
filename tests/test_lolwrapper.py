@@ -176,6 +176,50 @@ def test_match_list(wrapper, environment):
     assert "gameId" in response["matches"][0].keys()
 
 
+def test_match_list_begin_greater_than_end(wrapper, environment):
+    """Test an API call with begin greater than end for index and time."""
+
+    summoner_id = environment['summoner_id']
+
+    # get the account_id
+    user_data = wrapper.summoner_by_id(summoner_id)
+
+    account_id = user_data["accountId"]
+    
+    # index
+    with pytest.raises(Exception) as index_info:
+        _ = wrapper.match_list(account_id, beginIndex=100, endIndex=0)
+
+    assert "endIndex must be greater than beginIndex." in str(index_info.value)
+
+    # time
+    with pytest.raises(Exception) as time_info:
+        _ = wrapper.match_list(account_id, beginTime=31883612, endTime=11883612)
+
+    assert "endTime must be greater than beginTime." in str(time_info.value)
+
+
+def test_match_list_max_range_index_and_time(wrapper, environment):
+    """Test an API call with index and time range greater than the allowed."""
+
+    summoner_id = environment['summoner_id']
+
+    # get the account_id
+    user_data = wrapper.summoner_by_id(summoner_id)
+
+    account_id = user_data["accountId"]
+    
+    # index
+    with pytest.raises(Exception) as index_info:
+        _ = wrapper.match_list(account_id, beginIndex=0, endIndex=500)
+
+    assert "The maximum index range allowed is 100." in str(index_info.value)
+
+    # time
+    with pytest.raises(Exception) as time_info:
+        _ = wrapper.match_list(account_id, beginTime=0, endTime=604800005)
+
+    assert "The maximum time range allowed is one week." in str(time_info.value)
 
 
 def test_match_by_id(wrapper, environment):
@@ -198,4 +242,5 @@ def test_match_by_id(wrapper, environment):
     assert "gameId" in response.keys()
     assert response["gameId"] == game_id
     assert "mapId" in response.keys()
+
 
