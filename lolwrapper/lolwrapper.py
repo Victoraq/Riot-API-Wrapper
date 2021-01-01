@@ -138,14 +138,23 @@ class LoLWrapper():
         Get matchlist for games played on given account ID and region
         and filtered using given filter parameters, if any.
 
-        TODO: allow parameters
+        Note:
+
+        If both beginIndex and endIndex are provided, the endIndex must be
+        greater than the beginIndex. The maximum range allowed is 100,
+        otherwise a Exception will be returned.
+
+        If both beginTime and endTime are provided, the endTime must be
+        greater than the beginTime. The maximum range allowed is one week,
+        otherwise a Exception will be returned.
+
         """
 
         # Check api limitations over index and time.
         if beginIndex is not None and endIndex is not None:
             if beginIndex > endIndex:
                 raise Exception("endIndex must be greater than beginIndex.")
-            
+
             if abs(beginIndex - endIndex) > 100:
                 raise Exception("The maximum index range allowed is 100.")
 
@@ -158,6 +167,23 @@ class LoLWrapper():
 
         url = API_PATH["match_list"].format(
             region_url=self.region_url, account_id=account_id)
+
+        # append parameters
+        url += "?"
+        if champion:
+            url += "champion=" + str(champion) + "&"
+        if queue:
+            url += "queue=" + str(queue) + "&"
+        if season:
+            url += "season=" + str(season) + "&"
+        if endTime:
+            url += "endTime=" + str(endTime) + "&"
+        if beginTime:
+            url += "beginTime=" + str(beginTime) + "&"
+        if endIndex:
+            url += "endIndex=" + str(endIndex) + "&"
+        if beginIndex:
+            url += "beginIndex=" + str(beginIndex)
 
         response = requests.get(url, headers=self.headers)
 
