@@ -21,6 +21,15 @@ class LoLWrapper():
 
         self.headers = {"X-Riot-Token": user_api_key}
 
+    def platform_data(self):
+        """Get the platform data."""
+
+        url = API_PATH["platform_data"].format(region_url=self.region_url)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
     def summoner_by_id(self, summoner_id):
         """Get a summoner by summoner ID."""
 

@@ -17,6 +17,7 @@ REGION_URL = {
 }
 
 API_PATH = {
+    "platform_data": "{region_url}/lol/status/v4/platform-data",
     "summoner_by_id": "{region_url}/lol/summoner/v4/summoners/{summoner_id}",
     "champion_masteries": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{summoner_id}",
     "champion_mastery": "{region_url}/lol/champion-mastery/v4/champion-masteries/by-summoner/{summoner_id}/by-champion/{championId}",

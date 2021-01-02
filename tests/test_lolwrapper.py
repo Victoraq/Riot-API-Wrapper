@@ -40,8 +40,19 @@ def test_wrong_region():
     assert ', '.join(list(REGION_URL.keys())) in str(region_info.value)
 
 
+def test_platform_data(wrapper):
+    """Tests an API call to get platform data."""
+
+    response = wrapper.platform_data()
+
+    assert isinstance(response, dict)
+    assert "id" in response.keys()
+    assert "maintenances" in response.keys()
+    assert "incidents" in response.keys()
+
+
 def test_get_summoner_by_id(wrapper, environment):
-    """Tests an API call to get a summoner by the id"""
+    """Tests an API call to get a summoner by the id."""
 
     summoner_id = environment['summoner_id']
     response = wrapper.summoner_by_id(summoner_id)
