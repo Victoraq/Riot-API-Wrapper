@@ -31,7 +31,11 @@ class LoLWrapper():
         return response.json()
 
     def summoner_by_id(self, summoner_id):
-        """Get a summoner by summoner ID."""
+        """Get a summoner by summoner ID.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+
+        """
 
         url = API_PATH["summoner_by_id"].format(
                 region_url=self.region_url, summoner_id=summoner_id)
@@ -42,7 +46,12 @@ class LoLWrapper():
 
     def summoner_champion_mastery(self, summoner_id, champion_id=None):
         """Get champion mastery entries by player id.
-        For a specific champion use the champion_id parameter."""
+        For a specific champion use the champion_id parameter.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+        :param champion_id: Champion ID for this entry.
+
+        """
 
         if champion_id:
             url = API_PATH["champion_mastery"].format(
@@ -59,7 +68,11 @@ class LoLWrapper():
 
     def summoner_mastery_score(self, summoner_id):
         """Get a player's total champion mastery score,
-        which is the sum of individual champion mastery levels."""
+        which is the sum of individual champion mastery levels.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+
+        """
 
         url = API_PATH["mastery_score"].format(
             region_url=self.region_url, summoner_id=summoner_id)
@@ -79,7 +92,11 @@ class LoLWrapper():
         return response.json()
 
     def summoner_league_entry(self, summoner_id):
-        """Get league entries in all queues for a given summoner ID."""
+        """Get league entries in all queues for a given summoner ID.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+
+        """
 
         url = API_PATH["league_entry"].format(
             region_url=self.region_url, summoner_id=summoner_id)
@@ -93,6 +110,10 @@ class LoLWrapper():
         The entries can be devided into pages.
         If not provide the page parameter it will start at page 1.
 
+        :param queue: Queue identification name.
+        :param tier: Tier identification name.
+        :param division: Division identification number.
+
         The possible parameter values are:
 
         Queue: RANKED_SOLO_5x5, RANKED_FLEX_SR,
@@ -102,6 +123,7 @@ class LoLWrapper():
             MASTER, GRANDMASTER, CHALLENGER
 
         Division: I, II, III, IV
+
         """
 
         if queue not in QUEUE_LIST:
@@ -136,7 +158,11 @@ class LoLWrapper():
         return response.json()
 
     def match_by_id(self, match_id):
-        """Get match by match ID."""
+        """Get match by match ID.
+
+        :param match_id: Match ID number.
+
+        """
 
         url = API_PATH["match_by_id"].format(
             region_url=self.region_url, match_id=match_id)
@@ -156,6 +182,17 @@ class LoLWrapper():
         """
         Get matchlist for games played on given account ID and region
         and filtered using given filter parameters, if any.
+
+        :param champion: Champion ID for filtering the matchlist.
+        :param queue: Queue ID for filtering the matchlist.
+        :param season: This field should not be considered reliable
+            for the purposes of filtering matches by season.
+        :param endTime: The end time to use for filtering matchlist
+            specified as epoch milliseconds.
+        :param beginTime: The begin time to use for filtering matchlist
+            specified as epoch milliseconds.
+        :param endIndex: The end index to use for filtering matchlist.
+        :param beginIndex: The begin index to use for filtering matchlist.
 
         Note:
 
