@@ -78,6 +78,16 @@ class LoLWrapper():
 
         return response.json()
 
+    def summoner_league_entry(self, summoner_id):
+        """Get league entries in all queues for a given summoner ID."""
+
+        url = API_PATH["league_entry"].format(
+            region_url=self.region_url, summoner_id=summoner_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
     def league_entries(self, queue, tier, division, page=None):
         """Get all the league entries.
         The entries can be devided into pages.

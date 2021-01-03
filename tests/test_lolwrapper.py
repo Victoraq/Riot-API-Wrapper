@@ -107,6 +107,19 @@ def test_champion_rotations(wrapper):
     assert "freeChampionIdsForNewPlayers" in response.keys()
 
 
+def test_summoner_league_entry(wrapper, environment):
+    """Tests an API to get a summoner league entry."""
+
+    summoner_id = environment['summoner_id']
+
+    response = wrapper.summoner_league_entry(summoner_id)
+
+    assert isinstance(response, list)
+    assert isinstance(response[0], dict)
+    assert "queueType" in response[0].keys()
+    assert response[0]["summonerId"] == summoner_id
+
+
 def test_league_entries(wrapper):
     """Test an API call to get all league entries"""
 
@@ -283,3 +296,9 @@ def test_match_by_id(wrapper, environment):
     assert "mapId" in response.keys()
 
 
+def test_tournament_match_ids(wrapper):
+    pass
+
+
+def test_tournament_match(wrapper):
+    pass
