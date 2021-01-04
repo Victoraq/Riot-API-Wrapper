@@ -296,9 +296,31 @@ def test_match_by_id(wrapper, environment):
     assert "mapId" in response.keys()
 
 
-def test_tournament_match_ids(wrapper):
-    pass
+def test_spectator_featured_games(wrapper):
+    """Test an API call to get a list of featured games
+    available as spectator."""
+
+    response = wrapper.spectator_featured_games()
+
+    assert isinstance(response, dict)
+    assert "gameList" in response.keys()
+    assert isinstance(response["gameList"], list)
+    assert "gameId" in response["gameList"][0].keys()
 
 
-def test_tournament_match(wrapper):
-    pass
+def test_summoner_active_game(wrapper, environment):
+    """Test an API call to get a current game from a summoner."""
+
+    summoner_id = environment['summoner_id']
+
+    response = wrapper.summoner_active_game(summoner_id)
+
+    assert isinstance(response, dict)
+
+    # hard to test during an user match
+    if "status" in response.keys():
+        assert 404 == response["status"]["status_code"]
+    else:
+        assert "gameList" in response.keys()
+        assert isinstance(response["gameList"], list)
+        assert "gameId" in response["gameList"][0].keys()

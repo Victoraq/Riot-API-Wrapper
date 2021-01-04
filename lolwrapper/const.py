@@ -27,6 +27,8 @@ API_PATH = {
     "league_entries": "{region_url}/lol/league-exp/v4/entries/{queue}/{tier}/{division}",
     "match_by_id": "{region_url}/lol/match/v4/matches/{match_id}",
     "match_list": "{region_url}/lol/match/v4/matchlists/by-account/{account_id}",
+    "featured_games": "{region_url}/lol/spectator/v4/featured-games",
+    "active_games": "{region_url}/lol/spectator/v4/active-games/by-summoner/{summoner_id}",
 }
 
 """Lists of queue, tiers and divisions available"""

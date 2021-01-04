@@ -244,3 +244,26 @@ class LoLWrapper():
         response = requests.get(url, headers=self.headers)
 
         return response.json()
+
+    def spectator_featured_games(self):
+        """Get list of featured games."""
+
+        url = API_PATH["featured_games"].format(region_url=self.region_url)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
+    def summoner_active_game(self, summoner_id):
+        """Get current game information for the given summoner ID.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+
+        """
+
+        url = API_PATH["active_games"].format(
+            region_url=self.region_url, summoner_id=summoner_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
