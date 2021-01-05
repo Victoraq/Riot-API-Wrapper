@@ -1,5 +1,5 @@
 import requests
-from lolwrapper.const import (
+from riotwrapper.const import (
     API_PATH, REGION_URL, QUEUE_LIST,
     TIER_LIST, DIVISION_LIST
 )
