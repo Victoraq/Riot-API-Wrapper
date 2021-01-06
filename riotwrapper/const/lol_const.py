@@ -1,7 +1,7 @@
 # flake8: noqa
 # fmt: off
 
-"""List of Riot API available regions and endpoints."""
+"""List of League of Legends API available regions and endpoints."""
 
 REGION_URL = {
     "BR1": "https://br1.api.riotgames.com",

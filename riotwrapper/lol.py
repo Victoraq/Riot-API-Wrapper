@@ -1,5 +1,5 @@
 import requests
-from riotwrapper.const import (
+from riotwrapper.const.lol_const import (
     API_PATH, REGION_URL, QUEUE_LIST,
     TIER_LIST, DIVISION_LIST
 )
@@ -8,6 +8,15 @@ from riotwrapper.const import (
 class LoLWrapper():
 
     def __init__(self, api_key, region):
+        """League of Legends API Wrapper
+
+        :param api_key: Riot Developer API Key.
+        :param region: The region to execute the requests.
+            The currently available regions are:
+            BR1, EUN1, JP1, KR, LA1, LA2, NA1, OC1, RU, TR1
+
+        """
+
         user_api_key = api_key
 
         if region in REGION_URL.keys():

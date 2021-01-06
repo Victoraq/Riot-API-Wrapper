@@ -1,5 +1,5 @@
 from riotwrapper.lol import LoLWrapper
-from riotwrapper.const import (
+from riotwrapper.const.lol_const import (
     REGION_URL, QUEUE_LIST, TIER_LIST, DIVISION_LIST
 )
 import pytest
