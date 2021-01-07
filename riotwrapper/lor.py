@@ -1,3 +1,4 @@
+from riotwrapper.const.lor_const import REGION_URL
 
 
 class LoRWrapper():
@@ -10,4 +11,15 @@ class LoRWrapper():
 
         """
 
-        pass
+        user_api_key = api_key
+
+        if region in REGION_URL.keys():
+            self.region_url = REGION_URL[region]
+        else:
+            raise Exception("""
+                The region {} is not available.
+                The currently available regions are: {}"""
+                            .format(region,
+                                    ', '.join(list(REGION_URL.keys()))))
+
+        self.headers = {"X-Riot-Token": user_api_key}
