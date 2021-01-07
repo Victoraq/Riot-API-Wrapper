@@ -1,4 +1,7 @@
-from riotwrapper.const.lor_const import REGION_URL
+import requests
+from riotwrapper.const.lor_const import (
+    REGION_URL, API_PATH
+)
 
 
 class LoRWrapper():
@@ -23,3 +26,27 @@ class LoRWrapper():
                                     ', '.join(list(REGION_URL.keys()))))
 
         self.headers = {"X-Riot-Token": user_api_key}
+
+    def platform_data(self):
+        """Get Legends of Runeterra status for the region."""
+
+        url = API_PATH["platform_data"].format(region_url=self.region_url)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
+    def match_by_ids(self):
+        pass
+
+    def match_ids(self):
+        pass
+
+    def leaderboard(self):
+        """Get the players in Master tier.."""
+
+        url = API_PATH["leaderboard"].format(region_url=self.region_url)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()

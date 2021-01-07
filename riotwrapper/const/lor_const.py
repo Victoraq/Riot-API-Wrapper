@@ -10,6 +10,7 @@ REGION_URL = {
 }
 
 API_PATH = {
+    "platform_data": "{region_url}/lor/status/v1/platform-data",
     "match_ids": "{region_url}/lor/match/v1/matches/by-puuid/{puuid}/ids",
     "match_by_id": "{region_url}/lor/match/v1/matches/{match_id}",
     "leaderboard": "{region_url}/lor/ranked/v1/leaderboards",
