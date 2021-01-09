@@ -37,7 +37,11 @@ class LoRWrapper():
         return response.json()
 
     def match_by_id(self, match_id):
-        """Get match by id."""
+        """Get match by id.
+
+        :param match_id: Match ID code.
+
+        """
 
         url = API_PATH["match_by_id"].format(
             region_url=self.region_url, match_id=match_id)
@@ -47,7 +51,11 @@ class LoRWrapper():
         return response.json()
 
     def match_ids(self, account_id):
-        """Get match id list by account id."""
+        """Get match id list by account id.
+
+        :param account_id: Account ID or PUUID code.
+
+        """
 
         url = API_PATH["match_ids"].format(
             region_url=self.region_url, account_id=account_id)
@@ -57,7 +65,7 @@ class LoRWrapper():
         return response.json()
 
     def leaderboard(self):
-        """Get the players in Master tier.."""
+        """Get the players in Master tier."""
 
         url = API_PATH["leaderboard"].format(region_url=self.region_url)
 

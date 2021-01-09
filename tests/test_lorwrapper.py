@@ -86,4 +86,4 @@ class TestLoRWrapper:
 
         assert isinstance(response, dict)
         assert "metadata" in response.keys()
-        assert "info" in response.keys()       
+        assert "info" in response.keys()
