@@ -1,5 +1,7 @@
+import requests
 from riotwrapper.const.tft_const import (
-    USER_REGION_URL
+    USER_REGION_URL, API_PATH, AMERICAS, EUROPE, ASIA,
+    MATCH_REGION_URL
 )
 
 
@@ -16,6 +18,7 @@ class TFTWrapper():
         user_api_key = api_key
 
         if region in USER_REGION_URL.keys():
+            self.region = region
             self.region_url = USER_REGION_URL[region]
         else:
             raise Exception("""
@@ -25,3 +28,55 @@ class TFTWrapper():
                                     ', '.join(list(USER_REGION_URL.keys()))))
 
         self.headers = {"X-Riot-Token": user_api_key}
+
+    def _continent_region(self, country):
+        """Determine from which continent the region is.
+        
+        :param country: country to be determined the continent.
+
+        """
+        if country in AMERICAS:
+            return MATCH_REGION_URL["AMERICAS"]
+        elif country in EUROPE:
+            return MATCH_REGION_URL["EUROPE"]
+        elif country in ASIA:
+            return MATCH_REGION_URL["ASIA"]
+
+        return Exception("Region not available.")
+
+    def match_by_id(self, match_id):
+        """Get match by id.
+
+        :param match_id: Match ID code.
+
+        """
+
+        region = self._continent_region(self.region)
+
+        url = API_PATH["match_by_id"].format(
+            region_url=region, match_id=match_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+
+    def match_ids(self, account_id, count=None):
+        """Get match id list by account id.
+
+        :param account_id: Account ID or PUUID code.
+        :param count: Number of ids.
+
+        """
+
+        region = self._continent_region(self.region)
+
+        url = API_PATH["match_ids"].format(
+            region_url=region, account_id=account_id)
+
+        if count is not None:
+            url += "?count=" + str(count)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
+

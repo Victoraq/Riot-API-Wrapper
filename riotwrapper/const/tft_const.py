@@ -30,5 +30,5 @@ USER_REGION_URL = {
 
 API_PATH = {
     "match_ids": "{region_url}/tft/match/v1/matches/by-puuid/{account_id}/ids",
-    "match_by_id": "{region_url}/tft/match/v1/matches/{matchId}",
+    "match_by_id": "{region_url}/tft/match/v1/matches/{match_id}",
 }
