@@ -1,5 +1,7 @@
 from riotwrapper.tft import TFTWrapper
-from riotwrapper.const.tft_const import USER_REGION_URL
+from riotwrapper.const.tft_const import (
+    USER_REGION_URL, TIER_LIST, HIGH_TIER_LIST
+)
 import pytest
 import re
 
@@ -86,6 +88,31 @@ class TestTFTWrapper:
 
         response = wrapper.league_entries(tier, division)
 
-        assert isinstance(response, list)
-        assert isinstance(response[0], dict)
-        assert "leagueId" in response[0]
+        assert isinstance(response['entries'], list)
+        assert isinstance(response['entries'][0], dict)
+        assert "summonerId" in response['entries'][0].keys()
+
+    def test_not_provide_division_league_entries(self, wrapper):
+        """Test an API call to get all league entries
+           not providing the division."""
+
+        tier = "DIAMOND"
+
+        with pytest.raises(Exception) as wrapper_info:
+            _ = wrapper.league_entries(tier)
+
+        assert "division must be provided." in str(wrapper_info.value)
+        assert ', '.join(list(TIER_LIST)) in str(wrapper_info.value)
+
+    def test_league_entries_high_tier(self, wrapper):
+        """Test an API call to get all league entries from high tiers."""
+
+        response_list = []
+        
+        for tier in HIGH_TIER_LIST:
+            response_list.append(wrapper.league_entries(tier))
+
+        for response in response_list:
+            assert isinstance(response['entries'], list)
+            assert isinstance(response['entries'][0], dict)
+            assert "summonerId" in response['entries'][0].keys()

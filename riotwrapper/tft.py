@@ -1,7 +1,8 @@
 import requests
 from riotwrapper.const.tft_const import (
     USER_REGION_URL, API_PATH, AMERICAS, EUROPE, ASIA,
-    MATCH_REGION_URL, TIER_LIST, DIVISION_LIST
+    MATCH_REGION_URL, TIER_LIST, DIVISION_LIST,
+    HIGH_TIER_LIST
 )
 
 
@@ -80,10 +81,13 @@ class TFTWrapper():
 
         return response.json()
 
-    def league_entries(self, tier, division, page=None):
+    def league_entries(self, tier, division=None, page=None):
         """Get all the league entries.
         The entries can be devided into pages.
         If not provide the page parameter it will start at page 1.
+
+        For the MASTER, GRANDMASTER, CHALLENGER tiers the division
+        and page number are not required.
 
         :param tier: Tier identification name.
         :param division: Division identification number.
@@ -97,19 +101,36 @@ class TFTWrapper():
 
         """
 
-        if tier not in TIER_LIST:
+        if tier not in TIER_LIST and tier not in HIGH_TIER_LIST:
             raise Exception("""
                 The tier {} is not available.
                 The currently available tiers are: {}"""
-                            .format(tier, ', '.join(TIER_LIST)))
+                            .format(
+                                    tier, 
+                                    ', '.join(TIER_LIST + HIGH_TIER_LIST)
+                                    ))
 
-        if division not in DIVISION_LIST:
+        if division is None and tier not in HIGH_TIER_LIST:
+            raise Exception("""
+                For the {} tiers the division must be provided."""
+                            .format(', '.join(TIER_LIST)))
+
+        if division not in DIVISION_LIST and division is not None:
             raise Exception("""
                 The division {} is not available.
                 The currently available divisions are: {}"""
                             .format(division, ', '.join(DIVISION_LIST)))
 
-        url = API_PATH["league_entries"].format(
+        if division == "master":
+            path = API_PATH["master_entries"]
+        elif division == "grandmaster":
+            path = API_PATH["grandmaster_entries"]
+        elif division == "challenger":
+            path = API_PATH["challenger_entries"]
+        else:
+            path = API_PATH["master_entries"]
+
+        url = path.format(
             region_url=self.region_url,
             tier=tier,
             division=division)

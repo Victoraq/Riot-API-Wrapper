@@ -31,11 +31,15 @@ USER_REGION_URL = {
 API_PATH = {
     "match_ids": "{region_url}/tft/match/v1/matches/by-puuid/{account_id}/ids",
     "match_by_id": "{region_url}/tft/match/v1/matches/{match_id}",
-    "league_entries": "{region_url}/tft/league/v1/entries/{tier}/{division}"
+    "league_entries": "{region_url}/tft/league/v1/entries/{tier}/{division}",
+    "master_entries": "{region_url}/tft/league/v1/master",
+    "grandmaster_entries": "{region_url}/tft/league/v1/grandmaster",
+    "challenger_entries": "{region_url}/tft/league/v1/challenger",
 }
 
 """Lists of tiers and divisions available"""
 
 TIER_LIST = ["IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND"]
+HIGH_TIER_LIST = ["MASTER", "GRANDMASTER", "CHALLENGER"]
 
 DIVISION_LIST = ["I", "II", "III", "IV"]
