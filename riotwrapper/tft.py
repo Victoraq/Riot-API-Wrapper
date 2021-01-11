@@ -1,7 +1,7 @@
 import requests
 from riotwrapper.const.tft_const import (
     USER_REGION_URL, API_PATH, AMERICAS, EUROPE, ASIA,
-    MATCH_REGION_URL
+    MATCH_REGION_URL, TIER_LIST, DIVISION_LIST
 )
 
 
@@ -80,3 +80,43 @@ class TFTWrapper():
 
         return response.json()
 
+    def league_entries(self, tier, division, page=None):
+        """Get all the league entries.
+        The entries can be devided into pages.
+        If not provide the page parameter it will start at page 1.
+
+        :param tier: Tier identification name.
+        :param division: Division identification number.
+
+        The possible parameter values are:
+
+        Tier: IRON, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND,
+            MASTER, GRANDMASTER, CHALLENGER
+
+        Division: I, II, III, IV
+
+        """
+
+        if tier not in TIER_LIST:
+            raise Exception("""
+                The tier {} is not available.
+                The currently available tiers are: {}"""
+                            .format(tier, ', '.join(TIER_LIST)))
+
+        if division not in DIVISION_LIST:
+            raise Exception("""
+                The division {} is not available.
+                The currently available divisions are: {}"""
+                            .format(division, ', '.join(DIVISION_LIST)))
+
+        url = API_PATH["league_entries"].format(
+            region_url=self.region_url,
+            tier=tier,
+            division=division)
+
+        if page:
+            url += f"?page={page}"
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()

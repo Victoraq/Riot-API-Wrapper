@@ -77,3 +77,15 @@ class TestTFTWrapper:
         assert isinstance(response, dict)
         assert "metadata" in response.keys()
         assert "info" in response.keys()
+
+    def test_league_entries(self, wrapper):
+        """Test an API call to get all league entries"""
+
+        tier = "DIAMOND"
+        division = "I"
+
+        response = wrapper.league_entries(tier, division)
+
+        assert isinstance(response, list)
+        assert isinstance(response[0], dict)
+        assert "leagueId" in response[0]
