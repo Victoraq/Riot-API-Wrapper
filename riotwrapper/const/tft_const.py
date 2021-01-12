@@ -35,6 +35,7 @@ API_PATH = {
     "master_entries": "{region_url}/tft/league/v1/master",
     "grandmaster_entries": "{region_url}/tft/league/v1/grandmaster",
     "challenger_entries": "{region_url}/tft/league/v1/challenger",
+    "league_entry": "{region_url}/tft/league/v1/entries/by-summoner/{summoner_id}"
 }
 
 """Lists of tiers and divisions available"""

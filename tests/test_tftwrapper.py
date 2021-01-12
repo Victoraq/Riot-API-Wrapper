@@ -12,10 +12,12 @@ def environment():
 
     api_key = os.environ.get('API_KEY')
     account_id = os.environ.get('ACCOUNT_ID')
+    summoner_id = os.environ.get('SUMMONER_ID')
 
     env = {
         'api_key': api_key,
-        'account_id': account_id
+        'account_id': account_id,
+        'summoner_id': summoner_id,
     }
 
     return env
@@ -116,3 +118,15 @@ class TestTFTWrapper:
             assert isinstance(response['entries'], list)
             assert isinstance(response['entries'][0], dict)
             assert "summonerId" in response['entries'][0].keys()
+
+    def test_summoner_league_entry(self, wrapper, environment):
+        """Tests an API to get a summoner league entry."""
+
+        summoner_id = environment['summoner_id']
+
+        response = wrapper.summoner_league_entry(summoner_id)
+
+        assert isinstance(response, list)
+        assert isinstance(response[0], dict)
+        assert "queueType" in response[0].keys()
+        assert response[0]["summonerId"] == summoner_id

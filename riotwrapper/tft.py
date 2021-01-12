@@ -141,3 +141,17 @@ class TFTWrapper():
         response = requests.get(url, headers=self.headers)
 
         return response.json()
+
+    def summoner_league_entry(self, summoner_id):
+        """Get league entry for a given summoner ID.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+
+        """
+
+        url = API_PATH["league_entry"].format(
+            region_url=self.region_url, summoner_id=summoner_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
