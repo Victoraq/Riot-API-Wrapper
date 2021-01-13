@@ -29,6 +29,7 @@ USER_REGION_URL = {
 }
 
 API_PATH = {
+    "summoner_by_id": "{region_url}/tft/summoner/v1/summoners/{summoner_id}",
     "match_ids": "{region_url}/tft/match/v1/matches/by-puuid/{account_id}/ids",
     "match_by_id": "{region_url}/tft/match/v1/matches/{match_id}",
     "league_entries": "{region_url}/tft/league/v1/entries/{tier}/{division}",

@@ -42,7 +42,20 @@ class TestTFTWrapper:
             _ = TFTWrapper("key", region=region)
 
         assert f"{region} is not available" in str(region_info.value)
-        assert ', '.join(list(USER_REGION_URL.keys())) in str(region_info.value)
+        assert ', '.join(list(USER_REGION_URL.keys())) in str(
+                                                region_info.value)
+
+    def test_get_summoner_by_id(self, wrapper, environment):
+        """Tests an API call to get a summoner by the id."""
+
+        summoner_id = environment['summoner_id']
+        response = wrapper.summoner_by_id(summoner_id)
+
+        assert isinstance(response, dict)
+        assert "id" in response.keys()
+        assert response["id"] == summoner_id
+        assert "puuid" in response.keys()
+        assert "accountId" in response.keys()
 
     def test_match_ids(self, wrapper, environment):
         """Tests an API call to get the match id list by user."""
@@ -66,7 +79,7 @@ class TestTFTWrapper:
 
         assert isinstance(response, list)
         assert len(response) <= 5
-    
+
     def test_match_by_id(self, wrapper, environment):
         """Tests and API call to get a match by id."""
 
@@ -110,7 +123,7 @@ class TestTFTWrapper:
         """Test an API call to get all league entries from high tiers."""
 
         response_list = []
-        
+
         for tier in HIGH_TIER_LIST:
             response_list.append(wrapper.league_entries(tier))
 

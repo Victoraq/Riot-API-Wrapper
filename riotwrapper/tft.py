@@ -32,7 +32,7 @@ class TFTWrapper():
 
     def _continent_region(self, country):
         """Determine from which continent the region is.
-        
+
         :param country: country to be determined the continent.
 
         """
@@ -44,6 +44,20 @@ class TFTWrapper():
             return MATCH_REGION_URL["ASIA"]
 
         return Exception("Region not available.")
+
+    def summoner_by_id(self, summoner_id):
+        """Get a summoner by summoner ID.
+
+        :param summoner_id: Encrypted summoner ID. Max length 63 characters.
+
+        """
+
+        url = API_PATH["summoner_by_id"].format(
+                region_url=self.region_url, summoner_id=summoner_id)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
 
     def match_by_id(self, match_id):
         """Get match by id.
@@ -106,7 +120,7 @@ class TFTWrapper():
                 The tier {} is not available.
                 The currently available tiers are: {}"""
                             .format(
-                                    tier, 
+                                    tier,
                                     ', '.join(TIER_LIST + HIGH_TIER_LIST)
                                     ))
 
