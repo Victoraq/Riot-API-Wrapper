@@ -1,3 +1,7 @@
+from riotwrapper.const.val_const import (
+    REGION_URL, API_PATH
+)
+import requests
 
 
 class ValWrapper():
@@ -10,4 +14,25 @@ class ValWrapper():
 
         """
 
-        pass
+        user_api_key = api_key
+
+        if region in REGION_URL.keys():
+            self.region = region
+            self.region_url = REGION_URL[region]
+        else:
+            raise Exception("""
+                The region {} is not available.
+                The currently available regions are: {}"""
+                            .format(region,
+                                    ', '.join(list(REGION_URL.keys()))))
+
+        self.headers = {"X-Riot-Token": user_api_key}
+
+    def platform_data(self):
+        """Get VALORANT status for the given platform."""
+
+        url = API_PATH["platform_data"].format(region_url=self.region_url)
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()
