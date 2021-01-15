@@ -36,3 +36,20 @@ class ValWrapper():
         response = requests.get(url, headers=self.headers)
 
         return response.json()
+
+    def contents(self, locale=None):
+        """Get content optionally filtered by locale.
+        
+        :param locale: Locale identification string.
+            Consult the API docs for the locale list.
+
+        """
+
+        url = API_PATH["contents"].format(region_url=self.region_url)
+
+        if locale is not None:
+            url += "?locale=" + locale
+
+        response = requests.get(url, headers=self.headers)
+
+        return response.json()

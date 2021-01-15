@@ -48,3 +48,24 @@ class TestValWrapper():
         assert "id" in response.keys()
         assert "maintenances" in response.keys()
         assert "incidents" in response.keys()
+
+    def test_content(self, wrapper):
+        """Tests an API call to get the contents data."""
+
+        response = wrapper.contents()
+
+        assert isinstance(response, dict)
+        assert "version" in response.keys()
+        assert "characters" in response.keys()
+        assert "maps" in response.keys()
+
+    def test_content_locale(self, wrapper):
+        """Tests an API call to get the contents data
+        filtered by locale."""
+
+        response = wrapper.contents(locale="pt-BR")
+
+        assert isinstance(response, dict)
+        assert "version" in response.keys()
+        assert "characters" in response.keys()
+        assert "maps" in response.keys()

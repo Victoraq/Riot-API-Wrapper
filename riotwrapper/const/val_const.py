@@ -15,4 +15,5 @@ REGION_URL = {
 
 API_PATH = {
     "platform_data": "{region_url}/val/status/v1/platform-data",
+    "contents": "{region_url}/val/status/v1/contents",
 }
